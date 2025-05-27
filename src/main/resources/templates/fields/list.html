@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Field List</title>
+</head>
+<body>
+    <h1>Field List</h1>
+    <a th:href="@{/fields/new}">新規作成</a>
+    <table border="1">
+        <tr>
+            <th>Study ID</th>
+            <th>Field ID</th>
+            <th>名前</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="field : ${fields}">
+            <td th:text="${field.sid}"></td>
+            <td th:text="${field.fid}"></td>
+            <td th:text="${field.fname}"></td>
+            <td>
+                <a th:href="@{|/fields/${field.sid}/${field.fid}|}">詳細</a>
+                <a th:href="@{|/fields/${field.sid}/${field.fid}/edit|}">編集</a>
+                <form th:action="@{|/fields/${field.sid}/${field.fid}/delete|}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('削除しますか？')">削除</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

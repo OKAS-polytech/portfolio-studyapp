@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Study 登録・編集</title>
+</head>
+<body>
+<h1>Study 登録・編集</h1>
+
+<form th:action="@{/studies}" th:object="${studyDto}" method="post">
+    <div>
+        <label>ID:</label>
+        <input type="number" th:field="*{sid}" th:readonly="${#fields.hasErrors('sid') == false and studyDto.sid != null}" />
+        <div th:if="${#fields.hasErrors('sid')}" th:errors="*{sid}">ID Error</div>
+    </div>
+    <div>
+        <label>名前:</label>
+        <input type="text" th:field="*{sname}" />
+        <div th:if="${#fields.hasErrors('sname')}" th:errors="*{sname}">Name Error</div>
+    </div>
+    <div>
+        <button type="submit">保存</button>
+        <a th:href="@{/studies}">戻る</a>
+    </div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Field Form</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1 th:text="${#strings.isEmpty(fieldDto.fid) ? '新規Field作成' : 'Field編集'}"></h1>
+
+<form th:action="@{${#strings.isEmpty(fieldDto.fid) ? '/fields' : '/fields/' + fieldDto.sid + '/' + fieldDto.fid}}" th:object="${fieldDto}" method="post">
+
+    <div>
+        <label for="sid">Study ID:</label>
+        <input type="number" th:field="*{sid}" id="sid" 
+               th:attr="readonly=${not #strings.isEmpty(fieldDto.fid)}"/>
+        <div th:if="${#fields.hasErrors('sid')}" th:errors="*{sid}"></div>
+    </div>
+
+    <div>
+        <label for="fid">Field ID:</label>
+        <input type="number" th:field="*{fid}" id="fid"
+               th:attr="readonly=${not #strings.isEmpty(fieldDto.fid)}"/>
+        <div th:if="${#fields.hasErrors('fid')}" th:errors="*{fid}"></div>
+    </div>
+
+    <div>
+        <label for="fname">Field Name:</label>
+        <input type="text" th:field="*{fname}" id="fname" maxlength="30" />
+        <div th:if="${#fields.hasErrors('fname')}" th:errors="*{fname}"></div>
+    </div>
+
+    <div>
+        <button type="submit">保存</button>
+        <a th:href="@{/fields}">キャンセル</a>
+    </div>
+
+</form>
+</body>
+</html>

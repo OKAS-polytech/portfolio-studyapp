@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>学習項目の表示</title>
+</head>
+<body>
+	<table border="1">
+	  <tr>
+	    <th>学問ＩＤ</th>
+	    <th>学問名</th>
+	  </tr>
+	  <tr th:each="study:${slist}">	<!-- th:eachでリストから繰り返しデータを取り出す -->
+	    <td th:text="${study.sid}"></td>
+	    <td th:text="${study.sname}"></td>
+	  </tr>
+	</table>
+
+</body>
+</html>

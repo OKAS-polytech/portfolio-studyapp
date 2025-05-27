@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Portion Form</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1 th:text="${#strings.isEmpty(portionDto.pid) ? '新規Portion作成' : 'Portion編集'}"></h1>
+
+<form th:action="@{${#strings.isEmpty(portionDto.pid) ? '/portions' : '/portions/' + portionDto.sid + '/' + portionDto.fid + '/' + portionDto.pid}}" th:object="${portionDto}" method="post">
+
+    <div>
+        <label for="sid">Study ID:</label>
+        <input type="number" th:field="*{sid}" id="sid"
+               th:attr="readonly=${not #strings.isEmpty(portionDto.pid)}"/>
+        <div th:if="${#fields.hasErrors('sid')}" th:errors="*{sid}"></div>
+    </div>
+
+    <div>
+        <label for="fid">Field ID:</label>
+        <input type="number" th:field="*{fid}" id="fid"
+               th:attr="readonly=${not #strings.isEmpty(portionDto.pid)}"/>
+        <div th:if="${#fields.hasErrors('fid')}" th:errors="*{fid}"></div>
+    </div>
+
+    <div>
+        <label for="pid">Portion ID:</label>
+        <input type="number" th:field="*{pid}" id="pid"
+               th:attr="readonly=${not #strings.isEmpty(portionDto.pid)}"/>
+        <div th:if="${#fields.hasErrors('pid')}" th:errors="*{pid}"></div>
+    </div>
+
+    <div>
+        <label for="pname">Portion Name:</label>
+        <input type="text" th:field="*{pname}" id="pname" maxlength="40" />
+        <div th:if="${#fields.hasErrors('pname')}" th:errors="*{pname}"></div>
+    </div>
+
+    <div>
+        <button type="submit">保存</button>
+        <a th:href="@{/portions}">キャンセル</a>
+    </div>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Study List</title>
+</head>
+<body>
+    <h1>Study List</h1>
+    <a th:href="@{/studies/new}">新規作成</a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>名前</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="study : ${studies}">
+            <td th:text="${study.sid}"></td>
+            <td th:text="${study.sname}"></td>
+            <td>
+                <a th:href="@{|/studies/${study.sid}|}">詳細</a>
+                <a th:href="@{|/studies/${study.sid}/edit|}">編集</a>
+                <form th:action="@{|/studies/${study.sid}/delete|}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('削除しますか？')">削除</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+	
+</body>
+</html>

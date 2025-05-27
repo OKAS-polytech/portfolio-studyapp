@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Article Detail</title></head>
+<body>
+<h1>Article Detail</h1>
+
+<!-- 記事の各項目を表示 -->
+<p><strong>SID:</strong> <span th:text="${article.sid}"></span></p>
+<p><strong>FID:</strong> <span th:text="${article.fid}"></span></p>
+<p><strong>PID:</strong> <span th:text="${article.pid}"></span></p>
+<p><strong>AID:</strong> <span th:text="${article.aid}"></span></p>
+<p><strong>Title:</strong> <span th:text="${article.atitle}"></span></p>
+<p><strong>Text:</strong> <span th:text="${article.atext}"></span></p>
+<p><strong>Created:</strong> <span th:text="${article.createdAt}"></span></p>
+
+<!-- 戻るリンク -->
+<a th:href="@{/articles}">Back to List</a>
+</body>
+</html>

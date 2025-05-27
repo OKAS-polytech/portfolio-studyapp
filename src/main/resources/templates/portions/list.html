@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Portion List</title>
+</head>
+<body>
+    <h1>Portion List</h1>
+    <a th:href="@{/portions/new}">新規作成</a>
+    <table border="1">
+        <tr>
+            <th>Study ID</th>
+            <th>Field ID</th>
+            <th>Portion ID</th>
+            <th>名前</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="portion : ${portions}">
+            <td th:text="${portion.sid}"></td>
+            <td th:text="${portion.fid}"></td>
+            <td th:text="${portion.pid}"></td>
+            <td th:text="${portion.pname}"></td>
+            <td>
+                <a th:href="@{|/portions/${portion.sid}/${portion.fid}/${portion.pid}|}">詳細</a>
+                <a th:href="@{|/portions/${portion.sid}/${portion.fid}/${portion.pid}/edit|}">編集</a>
+                <form th:action="@{|/portions/${portion.sid}/${portion.fid}/${portion.pid}/delete|}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('削除しますか？')">削除</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

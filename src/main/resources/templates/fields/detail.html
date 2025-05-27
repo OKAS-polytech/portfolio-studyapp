@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Field Detail</title>
+</head>
+<body>
+    <h1>Field Detail</h1>
+    <p>Study ID: <span th:text="${field.sid}"></span></p>
+    <p>Field ID: <span th:text="${field.fid}"></span></p>
+    <p>Name: <span th:text="${field.fname}"></span></p>
+    <a th:href="@{'/fields'}">Back to list</a>
+</body>
+</html>

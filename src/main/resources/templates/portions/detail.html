@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Portion Detail</title>
+</head>
+<body>
+    <h1>Portion Detail</h1>
+    <p>Study ID: <span th:text="${portion.sid}"></span></p>
+    <p>Field ID: <span th:text="${portion.fid}"></span></p>
+    <p>Portion ID: <span th:text="${portion.pid}"></span></p>
+    <p>Portion Name: <span th:text="${portion.pname}"></span></p>
+    <a th:href="@{'/portions'}">Back to list</a>
+</body>
+</html>
