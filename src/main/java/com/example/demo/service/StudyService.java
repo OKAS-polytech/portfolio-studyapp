@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.mapper.StudyMapper;
 import com.example.demo.model.dto.StudyDto;
@@ -49,8 +50,10 @@ public class StudyService {
         return mapper.toDto(entity);
     }
     
+    @Transactional
     public void save(StudyDto dto) {
         Studies entity = mapper.toEntity(dto);
+        System.out.println("Saving entity: " + entity); // Add this line
         repository.save(entity);
     }
 

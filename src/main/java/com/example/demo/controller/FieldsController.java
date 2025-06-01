@@ -73,4 +73,11 @@ public class FieldsController {
         fieldService.save(fieldDto);
         return "redirect:/fields";
     }
+    
+    // 削除実行
+    @PostMapping("/{sid}/{fid}/delete")
+    public String delete(@PathVariable Integer sid, @PathVariable Integer fid) {
+		fieldService.deleteById(sid, fid);
+		return "redirect:/fields";
+	}
 }

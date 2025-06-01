@@ -10,4 +10,9 @@ public class AdminController {
     public String admintop() {
         return "admintop";
     }
+    
+    @GetMapping("/markdowntest")
+    public String markdowntest() {
+		return "markdown";
+	}
 }

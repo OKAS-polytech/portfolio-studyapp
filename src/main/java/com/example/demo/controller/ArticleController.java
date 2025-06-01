@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.dto.ArticleDto;
 import com.example.demo.service.ArticleService;
+import com.example.demo.service.FieldService;
+import com.example.demo.service.PortionService;
+import com.example.demo.service.StudyService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/articles")
 public class ArticleController {
 	private final ArticleService articleService;
+	private final FieldService fieldService;
+	private final StudyService studyService;
+	private final PortionService portionService;
 	
 	// 記事一覧を表示する
 	@GetMapping
@@ -56,13 +62,20 @@ public class ArticleController {
 	
 	@GetMapping("/new")
     public String createForm(Model model) {
+		model.addAttribute("studyList", studyService.findAll());
+		model.addAttribute("fieldList", fieldService.findAll());
+		model.addAttribute("portionList", portionService.findAll());
         model.addAttribute("articleDto", new ArticleDto());
         return "articles/form";
     }
 
     @PostMapping
-    public String create(@Valid @ModelAttribute ArticleDto articleDto, BindingResult result) {
-        if (result.hasErrors()) {
+    public String create(@Valid @ModelAttribute ArticleDto articleDto, BindingResult result, Model model) {
+    	System.out.println("POST /articles called. Errors: " + result.hasErrors());
+    	if (result.hasErrors()) {
+        	model.addAttribute("studyList", studyService.findAll());
+            model.addAttribute("fieldList", fieldService.findAll());
+            model.addAttribute("portionList", portionService.findAll());
             return "articles/form";
         }
         articleService.save(articleDto);
@@ -79,8 +92,11 @@ public class ArticleController {
     @PostMapping("/{sid}/{fid}/{pid}/{aid}")
     public String update(@PathVariable Integer sid, @PathVariable Integer fid,
                          @PathVariable Integer pid, @PathVariable Integer aid,
-                         @Valid @ModelAttribute ArticleDto articleDto, BindingResult result) {
+                         @Valid @ModelAttribute ArticleDto articleDto, BindingResult result, Model model) {
         if (result.hasErrors()) {
+        	 model.addAttribute("studyList", studyService.findAll());
+             model.addAttribute("fieldList", fieldService.findAll());
+             model.addAttribute("portionList", portionService.findAll());
             return "articles/form";
         }
         articleService.save(articleDto);

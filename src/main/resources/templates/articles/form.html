@@ -3,6 +3,10 @@
 <head>
     <title>Article Form</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <style>
+        #preview-area { border:1px solid #ccc; padding:10px; min-height:100px; margin-top:10px; }
+    </style>
 </head>
 <body>
 <h1 th:text="${#strings.isEmpty(articleDto.aid) ? '新規Article作成' : 'Article編集'}"></h1>
@@ -11,42 +15,50 @@
 
     <div>
         <label for="sid">Study ID:</label>
-        <input type="number" th:field="*{sid}" id="sid"
-               th:attr="readonly=${not #strings.isEmpty(articleDto.aid)}"/>
+        <select th:field="*{sid}" id="sid" required>
+            <option value="">選択してください</option>
+            <option th:each="s : ${studyList}" th:value="${s.sid}" th:text="${s.sname}"></option>
+        </select>
         <div th:if="${#fields.hasErrors('sid')}" th:errors="*{sid}"></div>
     </div>
 
     <div>
         <label for="fid">Field ID:</label>
-        <input type="number" th:field="*{fid}" id="fid"
-               th:attr="readonly=${not #strings.isEmpty(articleDto.aid)}"/>
+        <select th:field="*{fid}" id="fid" required>
+            <option value="">選択してください</option>
+            <option th:each="f : ${fieldList}" th:value="${f.fid}" th:text="${f.fname}"></option>
+        </select>
         <div th:if="${#fields.hasErrors('fid')}" th:errors="*{fid}"></div>
     </div>
 
     <div>
         <label for="pid">Portion ID:</label>
-        <input type="number" th:field="*{pid}" id="pid"
-               th:attr="readonly=${not #strings.isEmpty(articleDto.aid)}"/>
+        <select th:field="*{pid}" id="pid" required>
+            <option value="">選択してください</option>
+            <option th:each="p : ${portionList}" th:value="${p.pid}" th:text="${p.pname}"></option>
+        </select>
         <div th:if="${#fields.hasErrors('pid')}" th:errors="*{pid}"></div>
     </div>
 
     <div>
         <label for="aid">Article ID:</label>
         <input type="number" th:field="*{aid}" id="aid"
-               th:attr="readonly=${not #strings.isEmpty(articleDto.aid)}"/>
+               th:attr="readonly=${not #strings.isEmpty(articleDto.aid)}" required/>
         <div th:if="${#fields.hasErrors('aid')}" th:errors="*{aid}"></div>
     </div>
 
     <div>
         <label for="atitle">タイトル:</label>
-        <input type="text" th:field="*{atitle}" id="atitle" maxlength="40" />
+        <input type="text" th:field="*{atitle}" id="atitle" maxlength="40" required/>
         <div th:if="${#fields.hasErrors('atitle')}" th:errors="*{atitle}"></div>
     </div>
 
     <div>
-        <label for="atext">本文:</label>
-        <textarea th:field="*{atext}" id="atext" rows="5" cols="40"></textarea>
+        <label for="atext">本文 (Markdown):</label>
+        <textarea th:field="*{atext}" id="atext" rows="5" cols="40" required></textarea>
         <div th:if="${#fields.hasErrors('atext')}" th:errors="*{atext}"></div>
+        <button type="button" onclick="showPreview()">プレビュー</button>
+        <div id="preview-area"></div>
     </div>
 
     <div>
@@ -55,5 +67,20 @@
     </div>
 
 </form>
+
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("atext") });
+    function showPreview() {
+        var markdown = simplemde.value();
+        var html = marked.parse(markdown);
+        document.getElementById("preview-area").innerHTML = html;
+        if (window.MathJax) {
+            MathJax.typesetPromise([document.getElementById("preview-area")]);
+        }
+    }
+</script>
 </body>
 </html>
